@@ -1,0 +1,22 @@
+{
+  "name": "timetochat",
+  "version": "1.0.0",
+  "description": "A web application that allows users to chat with people from anywhere in the world.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ManojBahuguna/TimeToChat.git"
+  },
+  "keywords": [
+    "chat"
+  ],
+  "author": "Manoj Bahuguna",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ManojBahuguna/TimeToChat/issues"
+  },
+  "homepage": "https://github.com/ManojBahuguna/TimeToChat#readme"
+}
