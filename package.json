@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/ManojBahuguna/TimeToChat/issues"
   },
-  "homepage": "https://github.com/ManojBahuguna/TimeToChat#readme"
+  "homepage": "https://github.com/ManojBahuguna/TimeToChat#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
 }
