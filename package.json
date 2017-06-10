@@ -21,6 +21,7 @@
   "homepage": "https://github.com/ManojBahuguna/TimeToChat#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "jsonwebtoken": "^7.4.1",
     "mongoose": "^4.10.5",

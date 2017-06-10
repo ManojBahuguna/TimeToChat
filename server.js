@@ -6,10 +6,13 @@ const dbConfig = require('./configs/database.config');
 const express = require('express');
 const app = express();
 const path = require('path');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const users = require('./routes/users');
+const passport = require('passport');
 
 //Setup Mongoose
+mongoose.Promise = global.Promise;
 mongoose.connect(dbConfig.localDbUrl);
 mongoose.connection.on('connected', () => {
     console.log('Connected to database!');
@@ -19,8 +22,17 @@ mongoose.connection.on('error', (err) => {
 });
 
 
+//Setup Passport
+app.use(passport.initialize());
+app.use(passport.session());
+require('./configs/passport.config')(passport);
+
 //Express middlewares
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
+
+//Express Routes
 app.use('/users', users);
 
 // Start Express Server

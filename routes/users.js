@@ -15,9 +15,12 @@ router.post('/register', (req, res, next) => {
     });
 
     User.addUser(newUser, (err, user) => {
-        console.log(err);
-        if(err)
-            res.json({success: false, msg: 'Failed to register user!'});
+        if(err) {
+            if(err.code === 11000)
+                res.json({success: false, msg: 'Email already exists!'});
+            else
+                res.json({success: false, msg: 'Failed to register user!'});
+        }
         else
             res.json({success: true, msg: 'User Registered!'});
     });
@@ -32,7 +35,6 @@ router.post('/authenticate', (req, res, next) => {
         
         if(!user)
             return res.json({success: false, msg: 'User not found!'});
-        
         User.comparePassword(password, user.password, (err, isMatch) => {
             if (err) throw err;
             if(!isMatch)
