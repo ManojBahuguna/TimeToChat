@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/ManojBahuguna/TimeToChat#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.15.3",
     "mongoose": "^4.10.5"
   }
