@@ -13,16 +13,24 @@ router.post('/register', (req, res, next) => {
         gender: req.body.gender,
         password: req.body.password
     });
-
     User.addUser(newUser, (err, user) => {
-        if(err) {
-            if(err.code === 11000)
-                res.json({success: false, msg: 'Email already exists!'});
+        if (err) {
+            console.log(err);
+            if (err.errors) {
+                let errors = [];
+                for (e in err.errors) {
+                    errors.push(err.errors[e].message);
+                }
+                res.json({success: false, msg: 'Validation failed!', errors: errors});
+            } else if (err.msg) {
+                res.json({ success: false, msg: err.msg });
+            } else if (err.code === 11000)
+                res.json({ success: false, msg: 'Email already exists!' });
             else
-                res.json({success: false, msg: 'Failed to register user!'});
+                res.json({ success: false, msg: 'Failed to register user!' });
         }
         else
-            res.json({success: true, msg: 'User Registered!'});
+            res.json({ success: true, msg: 'User Registered!' });
     });
 });
 
@@ -30,16 +38,16 @@ router.post('/authenticate', (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    User.getUserById(email, (err, user)=>{
-        if(err) throw err;
-        
-        if(!user)
-            return res.json({success: false, msg: 'User not found!'});
+    User.getUserById(email, (err, user) => {
+        if (err) throw err;
+
+        if (!user)
+            return res.json({ success: false, msg: 'User not found!' });
         User.comparePassword(password, user.password, (err, isMatch) => {
             if (err) throw err;
-            if(!isMatch)
-                return res.json({success: false, msg: 'Incorrect Password!'});
-            
+            if (!isMatch)
+                return res.json({ success: false, msg: 'Incorrect Password!' });
+
             const token = jwt.sign(user, dbConfig.password, {
                 expiresIn: '7d'
             });
@@ -58,8 +66,8 @@ router.post('/authenticate', (req, res, next) => {
     });
 });
 
-router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res, next) => {
-    res.json({user: req.user});
+router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+    res.json({ user: req.user });
 });
 
 module.exports = router;
