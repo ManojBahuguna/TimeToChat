@@ -7,6 +7,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
+const users = require('./routes/users');
 
 //Setup Mongoose
 mongoose.connect(dbConfig.localDbUrl);
@@ -20,9 +21,9 @@ mongoose.connection.on('error', (err) => {
 
 //Express middlewares
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use('/users', users);
 
 // Start Express Server
-app.listen(serverConfig.port, ()=>{
+app.listen(serverConfig.port, () => {
     console.log('Server started at port : ' + serverConfig.port);
 });
